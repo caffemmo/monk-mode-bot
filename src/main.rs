@@ -733,7 +733,7 @@ async fn mark_task_undone(pool: &SqlitePool, date: &str, task_id: &str) -> Resul
 async fn daily_summary_text(pool: &SqlitePool, date: &str, state: &AppState) -> Result<String> {
     ensure_all_tasks_for_date(pool, date).await?;
     let rows = sqlx::query(
-        "SELECT task_id, title, points, completed FROM monk_tasks WHERE date = ? ORDER BY section_id, task_id",
+        "SELECT task_id, title, points, completed FROM monk_tasks WHERE date = ?",
     )
     .bind(date)
     .fetch_all(pool)
@@ -767,10 +767,7 @@ async fn daily_summary_text(pool: &SqlitePool, date: &str, state: &AppState) -> 
         String::new(),
     ];
 
-    for row in rows {
-        let icon = if row.get::<i64, _>("completed") != 0 { "✅" } else { "❌" };
-        lines.push(format!("{icon} {}", row.get::<String, _>("title")));
-    }
+    lines.extend(daily_summary_task_lines(&rows));
 
     if let Some(priorities) = priorities {
         lines.push(String::new());
@@ -793,6 +790,33 @@ async fn daily_summary_text(pool: &SqlitePool, date: &str, state: &AppState) -> 
     lines.push(format!("Giờ tổng kết hằng ngày: {}", state.daily_summary_time));
 
     Ok(lines.join("\n"))
+}
+
+fn daily_summary_task_lines(rows: &[sqlx::sqlite::SqliteRow]) -> Vec<String> {
+    let mut lines = Vec::new();
+    for section in SECTIONS {
+        let section_rows = section
+            .tasks
+            .iter()
+            .filter_map(|task| {
+                rows.iter()
+                    .find(|row| row.get::<String, _>("task_id") == task.id)
+            })
+            .collect::<Vec<_>>();
+        if section_rows.is_empty() {
+            continue;
+        }
+        lines.push(section.title.to_string());
+        for row in section_rows {
+            let icon = if row.get::<i64, _>("completed") != 0 { "✅" } else { "❌" };
+            lines.push(format!("{icon} {}", row.get::<String, _>("title")));
+        }
+        lines.push(String::new());
+    }
+    if lines.last().is_some_and(|line| line.is_empty()) {
+        lines.pop();
+    }
+    lines
 }
 
 async fn weekly_summary_text(pool: &SqlitePool, date: &str) -> Result<String> {
