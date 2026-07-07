@@ -1,40 +1,40 @@
 # Monk Mode Bot
 
-Telegram bot rieng cho Monk Mode 90 ngay.
+Telegram bot riêng cho Monk Mode 90 ngày.
 
-## Chuan bi
+## Chuẩn bị
 
-1. Vao `@BotFather` va revoke token da tung paste vao chat.
-2. Tao token moi.
-3. Copy `.env.example` thanh `.env`.
-4. Dien:
+1. Vào `@BotFather` và revoke token đã từng paste vào chat.
+2. Tạo token mới.
+3. Copy `.env.example` thành `.env`.
+4. Điền:
 
 ```env
 BOT_TOKEN=token_moi
-OWNER_TELEGRAM_ID=telegram_id_cua_ban
+OWNER_TELEGRAM_ID=telegram_id_của_bạn
 DATABASE_URL=sqlite://monk_mode.db
 TIMEZONE=Asia/Bangkok
 ```
 
-## Chay local/VPS
+## Chạy local/VPS
 
 ```bash
 cargo run --release
 ```
 
-## Lenh Telegram
+## Lệnh Telegram
 
-- `/start` - bat dau Monk Mode
-- `/today` - xem tien do hom nay
-- `/week` - tong ket 7 ngay gan nhat
-- `/journal` - ghi journal hom nay
-- `/plan` - ghi 3 viec quan trong
-- `/urge` - protocol khi dang nho co ay
-- `/help` - huong dan
+- `/start` - bắt đầu Monk Mode
+- `/today` - xem tiến độ hôm nay
+- `/week` - tổng kết 7 ngày gần nhất
+- `/journal` - ghi journal hôm nay
+- `/plan` - ghi 3 việc quan trọng
+- `/urge` - protocol khi đang nhớ cô ấy
+- `/help` - hướng dẫn
 
-Bot chi phan hoi `OWNER_TELEGRAM_ID`.
+Bot chỉ phản hồi `OWNER_TELEGRAM_ID`.
 
-## Systemd goi y
+## Systemd gợi ý
 
 ```ini
 [Unit]

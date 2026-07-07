@@ -42,108 +42,108 @@ struct SectionDef {
 }
 
 const MORNING_TASKS: &[TaskDef] = &[
-    TaskDef { id: "water", title: "Uong 500ml nuoc", points: 5 },
-    TaskDef { id: "blanket", title: "Gap chan", points: 5 },
-    TaskDef { id: "brush", title: "Danh rang", points: 5 },
-    TaskDef { id: "face", title: "Rua mat", points: 5 },
-    TaskDef { id: "window", title: "Mo cua so", points: 5 },
-    TaskDef { id: "breath", title: "Hit tho 5 phut", points: 10 },
+    TaskDef { id: "water", title: "Uống 500ml nước", points: 5 },
+    TaskDef { id: "blanket", title: "Gấp chăn", points: 5 },
+    TaskDef { id: "brush", title: "Đánh răng", points: 5 },
+    TaskDef { id: "face", title: "Rửa mặt", points: 5 },
+    TaskDef { id: "window", title: "Mở cửa sổ", points: 5 },
+    TaskDef { id: "breath", title: "Hít thở 5 phút", points: 10 },
 ];
 
 const BREAKFAST_TASKS: &[TaskDef] = &[
-    TaskDef { id: "protein", title: "An du protein", points: 5 },
-    TaskDef { id: "carb", title: "An du tinh bot", points: 5 },
-    TaskDef { id: "fruit", title: "An trai cay", points: 5 },
+    TaskDef { id: "protein", title: "Ăn đủ protein", points: 5 },
+    TaskDef { id: "carb", title: "Ăn đủ tinh bột", points: 5 },
+    TaskDef { id: "fruit", title: "Ăn trái cây", points: 5 },
 ];
 
 const CARDIO_TASKS: &[TaskDef] = &[
-    TaskDef { id: "cardio", title: "Cardio 20-30 phut", points: 15 },
-    TaskDef { id: "no_phone", title: "Khong luot dien thoai khi tap", points: 5 },
+    TaskDef { id: "cardio", title: "Cardio 20-30 phút", points: 15 },
+    TaskDef { id: "no_phone", title: "Không lướt điện thoại khi tập", points: 5 },
 ];
 
 const PLAN_TASKS: &[TaskDef] = &[
-    TaskDef { id: "top3", title: "Viet 3 viec quan trong nhat", points: 10 },
+    TaskDef { id: "top3", title: "Viết 3 việc quan trọng nhất", points: 10 },
 ];
 
 const DEEP_WORK_TASKS: &[TaskDef] = &[
     TaskDef { id: "pomodoro1", title: "Pomodoro 1", points: 10 },
     TaskDef { id: "pomodoro2", title: "Pomodoro 2", points: 10 },
-    TaskDef { id: "phone_away", title: "Dien thoai de xa", points: 10 },
+    TaskDef { id: "phone_away", title: "Điện thoại để xa", points: 10 },
 ];
 
 const LUNCH_TASKS: &[TaskDef] = &[
-    TaskDef { id: "lunch", title: "An trua khong truoc may tinh", points: 10 },
+    TaskDef { id: "lunch", title: "Ăn trưa không trước máy tính", points: 10 },
 ];
 
 const NAP_TASKS: &[TaskDef] = &[
-    TaskDef { id: "nap", title: "Ngu 30-45 phut", points: 10 },
+    TaskDef { id: "nap", title: "Ngủ 30-45 phút", points: 10 },
 ];
 
 const MMO_TASKS: &[TaskDef] = &[
-    TaskDef { id: "mmo", title: "Tiep tuc MMO", points: 20 },
-    TaskDef { id: "hourly_break", title: "Moi 1 gio dung day/uong nuoc", points: 10 },
+    TaskDef { id: "mmo", title: "Tiếp tục MMO", points: 20 },
+    TaskDef { id: "hourly_break", title: "Mỗi 1 giờ đứng dậy/uống nước", points: 10 },
 ];
 
 const GYM_TASKS: &[TaskDef] = &[
-    TaskDef { id: "train", title: "Tap nghiem tuc", points: 20 },
-    TaskDef { id: "no_tiktok", title: "Khong TikTok giua cac set", points: 10 },
-    TaskDef { id: "stretch", title: "Gian co sau tap", points: 10 },
+    TaskDef { id: "train", title: "Tập nghiêm túc", points: 20 },
+    TaskDef { id: "no_tiktok", title: "Không TikTok giữa các set", points: 10 },
+    TaskDef { id: "stretch", title: "Giãn cơ sau tập", points: 10 },
 ];
 
 const DINNER_TASKS: &[TaskDef] = &[
-    TaskDef { id: "dinner", title: "An toi du protein va uong nuoc", points: 10 },
+    TaskDef { id: "dinner", title: "Ăn tối đủ protein và uống nước", points: 10 },
 ];
 
 const EVENING_TASKS: &[TaskDef] = &[
-    TaskDef { id: "relax", title: "Giai tri co y thuc", points: 5 },
-    TaskDef { id: "no_doom", title: "Khong luot vo thuc/binh luan tieu cuc", points: 10 },
-    TaskDef { id: "no_stalk", title: "Khong stalk co ay", points: 20 },
+    TaskDef { id: "relax", title: "Giải trí có ý thức", points: 5 },
+    TaskDef { id: "no_doom", title: "Không lướt vô thức/bình luận tiêu cực", points: 10 },
+    TaskDef { id: "no_stalk", title: "Không stalk cô ấy", points: 20 },
 ];
 
 const STUDY_TASKS: &[TaskDef] = &[
-    TaskDef { id: "study60", title: "Hoc it nhat 60 phut", points: 20 },
-    TaskDef { id: "one_topic", title: "Chi hoc mot chu de chinh", points: 5 },
+    TaskDef { id: "study60", title: "Học ít nhất 60 phút", points: 20 },
+    TaskDef { id: "one_topic", title: "Chỉ học một chủ đề chính", points: 5 },
 ];
 
 const LATE_WORK_TASKS: &[TaskDef] = &[
-    TaskDef { id: "work_or_book", title: "Lam viec neu con viec, khong thi doc sach", points: 10 },
+    TaskDef { id: "work_or_book", title: "Làm việc nếu còn việc, không thì đọc sách", points: 10 },
 ];
 
 const READING_TASKS: &[TaskDef] = &[
-    TaskDef { id: "read20", title: "Doc sach 20 phut", points: 15 },
+    TaskDef { id: "read20", title: "Đọc sách 20 phút", points: 15 },
 ];
 
 const JOURNAL_TASKS: &[TaskDef] = &[
-    TaskDef { id: "journal", title: "Viet journal", points: 20 },
+    TaskDef { id: "journal", title: "Viết journal", points: 20 },
 ];
 
 const MEDITATION_TASKS: &[TaskDef] = &[
-    TaskDef { id: "meditate", title: "Thien 10 phut", points: 10 },
+    TaskDef { id: "meditate", title: "Thiền 10 phút", points: 10 },
 ];
 
 const SLEEP_TASKS: &[TaskDef] = &[
-    TaskDef { id: "shower", title: "Tam va chuan bi ngu", points: 5 },
-    TaskDef { id: "sleep", title: "Ngu luc 01:00", points: 20 },
+    TaskDef { id: "shower", title: "Tắm và chuẩn bị ngủ", points: 5 },
+    TaskDef { id: "sleep", title: "Ngủ lúc 01:00", points: 20 },
 ];
 
 const SECTIONS: &[SectionDef] = &[
-    SectionDef { id: "morning", time: "08:00", title: "🌅 08:00 THUC DAY", intro: "30 phut dau tuyet doi khong mang xa hoi.", tasks: MORNING_TASKS },
-    SectionDef { id: "breakfast", time: "08:15", title: "🍳 08:15 AN SANG", intro: "Khong bo bua. Khong chi uong ca phe.", tasks: BREAKFAST_TASKS },
-    SectionDef { id: "cardio", time: "08:45", title: "🚶 08:45 CARDIO", intro: "Di bo, chay hoac dap xe.", tasks: CARDIO_TASKS },
-    SectionDef { id: "plan", time: "09:15", title: "📒 09:15 LAP KE HOACH", intro: "Chi viet 3 viec quan trong nhat.", tasks: PLAN_TASKS },
-    SectionDef { id: "deep", time: "09:30", title: "💻 09:30 DEEP WORK", intro: "50 phut lam, 10 phut nghi. Dien thoai de xa.", tasks: DEEP_WORK_TASKS },
-    SectionDef { id: "lunch", time: "12:00", title: "🍱 12:00 AN TRUA", intro: "Khong an truoc may tinh.", tasks: LUNCH_TASKS },
-    SectionDef { id: "nap", time: "12:30", title: "😴 12:30 NGU", intro: "Ngu ngan 30-45 phut.", tasks: NAP_TASKS },
-    SectionDef { id: "mmo", time: "13:30", title: "💻 13:30 MMO", intro: "Moi 1 tieng dung day, di bo, uong nuoc 5 phut.", tasks: MMO_TASKS },
-    SectionDef { id: "gym", time: "17:00", title: "🏋️ 17:00 GYM", intro: "Tap nghiem tuc. Khong bam dien thoai.", tasks: GYM_TASKS },
-    SectionDef { id: "dinner", time: "18:45", title: "🍗 18:45 AN TOI", intro: "An du protein va uong nuoc.", tasks: DINNER_TASKS },
-    SectionDef { id: "evening", time: "19:30", title: "🎮 19:30 GIAI TRI", intro: "Duoc giai tri, nhung khong stalk va khong luot vo thuc.", tasks: EVENING_TASKS },
-    SectionDef { id: "study", time: "20:30", title: "📚 20:30 HOC", intro: "It nhat 1 tieng. Mot chu de thoi.", tasks: STUDY_TASKS },
-    SectionDef { id: "latework", time: "22:00", title: "💼 22:00 LAM VIEC / DOC SACH", intro: "Neu con viec thi lam, khong thi doc sach.", tasks: LATE_WORK_TASKS },
-    SectionDef { id: "reading", time: "23:30", title: "📖 23:30 DOC SACH", intro: "Doc 20 phut.", tasks: READING_TASKS },
-    SectionDef { id: "journal", time: "00:00", title: "📓 00:00 JOURNAL", intro: "Viet that ngan nhung that that.", tasks: JOURNAL_TASKS },
-    SectionDef { id: "meditation", time: "00:20", title: "🧘 00:20 THIEN", intro: "10 phut im lang.", tasks: MEDITATION_TASKS },
-    SectionDef { id: "sleep", time: "00:40", title: "🚿 00:40 CHUAN BI NGU", intro: "Tam, tat man hinh, ngu luc 01:00.", tasks: SLEEP_TASKS },
+    SectionDef { id: "morning", time: "08:00", title: "🌅 08:00 THỨC DẬY", intro: "30 phút đầu tuyệt đối không mạng xã hội.", tasks: MORNING_TASKS },
+    SectionDef { id: "breakfast", time: "08:15", title: "🍳 08:15 ĂN SÁNG", intro: "Không bỏ bữa. Không chỉ uống cà phê.", tasks: BREAKFAST_TASKS },
+    SectionDef { id: "cardio", time: "08:45", title: "🚶 08:45 CARDIO", intro: "Đi bộ, chạy hoặc đạp xe.", tasks: CARDIO_TASKS },
+    SectionDef { id: "plan", time: "09:15", title: "📒 09:15 LẬP KẾ HOẠCH", intro: "Chỉ viết 3 việc quan trọng nhất.", tasks: PLAN_TASKS },
+    SectionDef { id: "deep", time: "09:30", title: "💻 09:30 DEEP WORK", intro: "50 phút làm, 10 phút nghỉ. Điện thoại để xa.", tasks: DEEP_WORK_TASKS },
+    SectionDef { id: "lunch", time: "12:00", title: "🍱 12:00 ĂN TRƯA", intro: "Không ăn trước máy tính.", tasks: LUNCH_TASKS },
+    SectionDef { id: "nap", time: "12:30", title: "😴 12:30 NGỦ", intro: "Ngủ ngắn 30-45 phút.", tasks: NAP_TASKS },
+    SectionDef { id: "mmo", time: "13:30", title: "💻 13:30 MMO", intro: "Mỗi 1 tiếng đứng dậy, đi bộ, uống nước 5 phút.", tasks: MMO_TASKS },
+    SectionDef { id: "gym", time: "17:00", title: "🏋️ 17:00 GYM", intro: "Tập nghiêm túc. Không bấm điện thoại.", tasks: GYM_TASKS },
+    SectionDef { id: "dinner", time: "18:45", title: "🍗 18:45 ĂN TỐI", intro: "Ăn đủ protein và uống nước.", tasks: DINNER_TASKS },
+    SectionDef { id: "evening", time: "19:30", title: "🎮 19:30 GIẢI TRÍ", intro: "Được giải trí, nhưng không stalk và không lướt vô thức.", tasks: EVENING_TASKS },
+    SectionDef { id: "study", time: "20:30", title: "📚 20:30 HỌC", intro: "Ít nhất 1 tiếng. Một chủ đề thôi.", tasks: STUDY_TASKS },
+    SectionDef { id: "latework", time: "22:00", title: "💼 22:00 LÀM VIỆC / ĐỌC SÁCH", intro: "Nếu còn việc thì làm, không thì đọc sách.", tasks: LATE_WORK_TASKS },
+    SectionDef { id: "reading", time: "23:30", title: "📖 23:30 ĐỌC SÁCH", intro: "Đọc 20 phút.", tasks: READING_TASKS },
+    SectionDef { id: "journal", time: "00:00", title: "📓 00:00 JOURNAL", intro: "Viết thật ngắn nhưng thật thật.", tasks: JOURNAL_TASKS },
+    SectionDef { id: "meditation", time: "00:20", title: "🧘 00:20 THIỀN", intro: "10 phút im lặng.", tasks: MEDITATION_TASKS },
+    SectionDef { id: "sleep", time: "00:40", title: "🚿 00:40 CHUẨN BỊ NGỦ", intro: "Tắm, tắt màn hình, ngủ lúc 01:00.", tasks: SLEEP_TASKS },
 ];
 
 #[tokio::main]
@@ -181,13 +181,13 @@ async fn main() -> Result<()> {
 
     let bot = Bot::new(token);
     bot.set_my_commands(vec![
-        teloxide::types::BotCommand::new("start", "Bat dau Monk Mode"),
-        teloxide::types::BotCommand::new("today", "Tien do hom nay"),
-        teloxide::types::BotCommand::new("week", "Tong ket 7 ngay"),
-        teloxide::types::BotCommand::new("journal", "Viet journal"),
-        teloxide::types::BotCommand::new("plan", "Viet 3 viec quan trong"),
-        teloxide::types::BotCommand::new("urge", "Dang nho co ay"),
-        teloxide::types::BotCommand::new("help", "Huong dan"),
+        teloxide::types::BotCommand::new("start", "Bắt đầu Monk Mode"),
+        teloxide::types::BotCommand::new("today", "Tiến độ hôm nay"),
+        teloxide::types::BotCommand::new("week", "Tổng kết 7 ngày"),
+        teloxide::types::BotCommand::new("journal", "Viết journal"),
+        teloxide::types::BotCommand::new("plan", "Viết 3 việc quan trọng"),
+        teloxide::types::BotCommand::new("urge", "Đang nhớ cô ấy"),
+        teloxide::types::BotCommand::new("help", "Hướng dẫn"),
     ])
     .await?;
 
@@ -305,14 +305,14 @@ async fn handle_message(bot: Bot, msg: Message, state: Arc<AppState>) -> Handler
                     save_journal(&state.pool, &date, text).await?;
                     mark_task_done(&state.pool, &date, "journal").await?;
                     clear_session(&state.pool, state.owner_id).await?;
-                    bot.send_message(chat_id, format!("✅ Da luu journal cho ngay {date}.")).await?;
+                    bot.send_message(chat_id, format!("✅ Đã lưu journal cho ngày {date}.")).await?;
                     return Ok(());
                 }
                 "plan" => {
                     save_priorities(&state.pool, &date, text).await?;
                     mark_task_done(&state.pool, &date, "top3").await?;
                     clear_session(&state.pool, state.owner_id).await?;
-                    bot.send_message(chat_id, format!("✅ Da luu 3 viec quan trong cho ngay {date}.")).await?;
+                    bot.send_message(chat_id, format!("✅ Đã lưu 3 việc quan trọng cho ngày {date}.")).await?;
                     return Ok(());
                 }
                 _ => {}
@@ -362,7 +362,7 @@ async fn handle_message(bot: Bot, msg: Message, state: Arc<AppState>) -> Handler
             bot.send_message(chat_id, help_text()).await?;
         }
         _ => {
-            bot.send_message(chat_id, "Lenh khong ro. Go /help de xem huong dan.").await?;
+            bot.send_message(chat_id, "Lệnh không rõ. Gõ /help để xem hướng dẫn.").await?;
         }
     }
 
@@ -371,7 +371,7 @@ async fn handle_message(bot: Bot, msg: Message, state: Arc<AppState>) -> Handler
 
 async fn handle_callback(bot: Bot, q: CallbackQuery, state: Arc<AppState>) -> HandlerResult {
     if q.from.id.0 as i64 != state.owner_id {
-        bot.answer_callback_query(q.id).text("Khong co quyen.").await?;
+        bot.answer_callback_query(q.id).text("Không có quyền.").await?;
         return Ok(());
     }
     let Some(data) = q.data.clone() else {
@@ -385,14 +385,14 @@ async fn handle_callback(bot: Bot, q: CallbackQuery, state: Arc<AppState>) -> Ha
     if let Some(rest) = data.strip_prefix("t|") {
         let parts = rest.split('|').collect::<Vec<_>>();
         if parts.len() != 3 {
-            bot.answer_callback_query(q.id).text("Callback loi.").await?;
+            bot.answer_callback_query(q.id).text("Callback lỗi.").await?;
             return Ok(());
         }
         let date = parts[0];
         let section_id = parts[1];
         let task_id = parts[2];
         toggle_task(&state.pool, date, task_id).await?;
-        bot.answer_callback_query(q.id).text("Da cap nhat.").await?;
+        bot.answer_callback_query(q.id).text("Đã cập nhật.").await?;
         if let Some(section) = section_by_id(section_id) {
             bot.edit_message_reply_markup(chat_id, message.id())
                 .reply_markup(section_keyboard(&state.pool, date, section).await?)
@@ -435,8 +435,8 @@ async fn handle_callback(bot: Bot, q: CallbackQuery, state: Arc<AppState>) -> Ha
         } else if kind == "pass" {
             mark_task_done(&state.pool, &date, "no_stalk").await?;
         }
-        bot.answer_callback_query(q.id).text("Da ghi nhan.").await?;
-        bot.send_message(chat_id, "Ghi nhan xong. Quay lai duong ray ngay bay gio.").await?;
+        bot.answer_callback_query(q.id).text("Đã ghi nhận.").await?;
+        bot.send_message(chat_id, "Ghi nhận xong. Quay lại đường ray ngay bây giờ.").await?;
     }
 
     Ok(())
@@ -502,43 +502,43 @@ async fn schedule_tick(bot: &Bot, state: &AppState) -> Result<()> {
 async fn welcome_text(state: &AppState, date: &str) -> Result<String> {
     let day = day_number(&state.pool, date).await?;
     Ok(format!(
-        "🧘 MONK MODE - 90 NGAY\n\nNgay {day}/90 da bat dau.\n\nKhong vi ai khac.\nNhung neu mot ngay co ay nhin lai, co ay se thay mot nguoi dan ong hoan toan khac."
+        "🧘 MONK MODE - 90 NGÀY\n\nNgày {day}/90 đã bắt đầu.\n\nKhông vì ai khác.\nNhưng nếu một ngày cô ấy nhìn lại, cô ấy sẽ thấy một người đàn ông hoàn toàn khác."
     ))
 }
 
 fn help_text() -> &'static str {
-    "Lenh:\n/start - bat dau\n/today - tien do hom nay\n/week - tong ket tuan\n/plan - ghi 3 viec quan trong\n/journal - ghi journal\n/urge - dang nho co ay\n\nBot chi tra loi owner Telegram ID trong .env."
+    "Lệnh:\n/start - bắt đầu\n/today - tiến độ hôm nay\n/week - tổng kết tuần\n/plan - ghi 3 việc quan trọng\n/journal - ghi journal\n/urge - đang nhớ cô ấy\n\nBot chỉ trả lời owner Telegram ID trong .env."
 }
 
 fn section_text(date: &str, section: &SectionDef) -> String {
-    format!("{}\nNgay: {}\n\n{}\n\nTick khi xong:", section.title, date, section.intro)
+    format!("{}\nNgày: {}\n\n{}\n\nTick khi xong:", section.title, date, section.intro)
 }
 
 fn journal_prompt(date: &str) -> String {
     format!(
-        "📓 Journal ngay {date}\n\nTra loi mot tin nhan voi 5 dong:\n1. Hom nay minh lam tot gi?\n2. Sai gi?\n3. Hoc duoc gi?\n4. Biet on dieu gi?\n5. Mai lam gi?"
+        "📓 Journal ngày {date}\n\nTrả lời một tin nhắn với 5 dòng:\n1. Hôm nay mình làm tốt gì?\n2. Sai gì?\n3. Học được gì?\n4. Biết ơn điều gì?\n5. Mai làm gì?"
     )
 }
 
 fn plan_prompt(date: &str) -> String {
-    format!("📒 Ke hoach ngay {date}\n\nGui 3 viec quan trong nhat hom nay, moi viec mot dong.")
+    format!("📒 Kế hoạch ngày {date}\n\nGửi 3 việc quan trọng nhất hôm nay, mỗi việc một dòng.")
 }
 
 fn urge_text() -> &'static str {
-    "🚨 DANG NHO CO AY\n\nDung lai 10 phut.\n\nKhong mo story.\nKhong doc tin cu.\nKhong nhan khi dang nho.\n\nLam 1 trong 3:\n🏋️ Gym\n🚶 Di bo\n📓 Viet 5 dong\n\nChon ket qua ben duoi."
+    "🚨 ĐANG NHỚ CÔ ẤY\n\nDừng lại 10 phút.\n\nKhông mở story.\nKhông đọc tin cũ.\nKhông nhắn khi đang nhớ.\n\nLàm 1 trong 3:\n🏋️ Gym\n🚶 Đi bộ\n📓 Viết 5 dòng\n\nChọn kết quả bên dưới."
 }
 
 fn main_menu_keyboard() -> InlineKeyboardMarkup {
     InlineKeyboardMarkup::new(vec![
         vec![
-            InlineKeyboardButton::callback("📋 Hom nay", "today"),
-            InlineKeyboardButton::callback("📊 Tuan nay", "week"),
+            InlineKeyboardButton::callback("📋 Hôm nay", "today"),
+            InlineKeyboardButton::callback("📊 Tuần này", "week"),
         ],
         vec![
-            InlineKeyboardButton::callback("📒 Ke hoach", "plan"),
+            InlineKeyboardButton::callback("📒 Kế hoạch", "plan"),
             InlineKeyboardButton::callback("📓 Journal", "journal"),
         ],
-        vec![InlineKeyboardButton::callback("🚨 Dang nho co ay", "urge")],
+        vec![InlineKeyboardButton::callback("🚨 Đang nhớ cô ấy", "urge")],
     ])
 }
 
@@ -548,8 +548,8 @@ fn today_keyboard(_date: &str) -> InlineKeyboardMarkup {
 
 fn urge_keyboard(date: &str) -> InlineKeyboardMarkup {
     InlineKeyboardMarkup::new(vec![
-        vec![InlineKeyboardButton::callback("✅ Toi da vuot qua", format!("urge|pass|{date}"))],
-        vec![InlineKeyboardButton::callback("❌ Toi da stalk", format!("urge|stalk|{date}"))],
+        vec![InlineKeyboardButton::callback("✅ Tôi đã vượt qua", format!("urge|pass|{date}"))],
+        vec![InlineKeyboardButton::callback("❌ Tôi đã stalk", format!("urge|stalk|{date}"))],
     ])
 }
 
@@ -563,8 +563,8 @@ async fn section_keyboard(pool: &SqlitePool, date: &str, section: &SectionDef) -
             format!("t|{date}|{}|{}", section.id, task.id),
         )]);
     }
-    rows.push(vec![InlineKeyboardButton::callback("📋 Xem tien do hom nay", "today")]);
-    rows.push(vec![InlineKeyboardButton::callback("🚨 Dang nho co ay", "urge")]);
+    rows.push(vec![InlineKeyboardButton::callback("📋 Xem tiến độ hôm nay", "today")]);
+    rows.push(vec![InlineKeyboardButton::callback("🚨 Đang nhớ cô ấy", "urge")]);
     Ok(InlineKeyboardMarkup::new(rows))
 }
 
@@ -578,8 +578,12 @@ async fn ensure_all_tasks_for_date(pool: &SqlitePool, date: &str) -> Result<()> 
 async fn ensure_tasks_for_section(pool: &SqlitePool, date: &str, section: &SectionDef) -> Result<()> {
     for task in section.tasks {
         sqlx::query(
-            "INSERT OR IGNORE INTO monk_tasks (date, task_id, section_id, title, points, completed)
-             VALUES (?, ?, ?, ?, ?, 0)",
+            "INSERT INTO monk_tasks (date, task_id, section_id, title, points, completed)
+             VALUES (?, ?, ?, ?, ?, 0)
+             ON CONFLICT(date, task_id) DO UPDATE SET
+                section_id = excluded.section_id,
+                title = excluded.title,
+                points = excluded.points",
         )
         .bind(date)
         .bind(task.id)
@@ -666,11 +670,11 @@ async fn daily_summary_text(pool: &SqlitePool, date: &str, state: &AppState) -> 
         .flatten();
 
     let mut lines = vec![
-        format!("🌙 Tong ket ngay {day}/90"),
-        format!("Ngay: {date}"),
+        format!("🌙 Tổng kết ngày {day}/90"),
+        format!("Ngày: {date}"),
         String::new(),
-        format!("Diem: {score}/100"),
-        format!("Hoan thanh: {done_count}/{}", rows.len()),
+        format!("Điểm: {score}/100"),
+        format!("Hoàn thành: {done_count}/{}", rows.len()),
         String::new(),
     ];
 
@@ -681,23 +685,23 @@ async fn daily_summary_text(pool: &SqlitePool, date: &str, state: &AppState) -> 
 
     if let Some(priorities) = priorities {
         lines.push(String::new());
-        lines.push(format!("📒 3 viec:\n{priorities}"));
+        lines.push(format!("📒 3 việc:\n{priorities}"));
     }
     if journal.is_some() {
         lines.push(String::new());
-        lines.push("📓 Journal: da luu".to_string());
+        lines.push("📓 Journal: đã lưu".to_string());
     }
 
     let comment = if score >= 85 {
-        "Nhan xet: Hom nay rat tot. Ky luat dang thang cam xuc."
+        "Nhận xét: Hôm nay rất tốt. Kỷ luật đang thắng cảm xúc."
     } else if score >= 60 {
-        "Nhan xet: Chua hoan hao, nhung ban van dang o tren duong ray."
+        "Nhận xét: Chưa hoàn hảo, nhưng bạn vẫn đang ở trên đường ray."
     } else {
-        "Nhan xet: Hom nay yeu. Dung tu danh minh, ngay mai quay lai nhip."
+        "Nhận xét: Hôm nay yếu. Đừng tự đánh mình, ngày mai quay lại nhịp."
     };
     lines.push(String::new());
     lines.push(comment.to_string());
-    lines.push(format!("Gio tong ket hang ngay: {}", state.daily_summary_time));
+    lines.push(format!("Giờ tổng kết hằng ngày: {}", state.daily_summary_time));
 
     Ok(lines.join("\n"))
 }
@@ -706,7 +710,7 @@ async fn weekly_summary_text(pool: &SqlitePool, date: &str) -> Result<String> {
     let end = NaiveDate::parse_from_str(date, "%Y-%m-%d")?;
     let start = end - Duration::days(6);
     let mut lines = vec![
-        "📊 Monk Mode - Tong ket 7 ngay".to_string(),
+        "📊 Monk Mode - Tổng kết 7 ngày".to_string(),
         format!("{start} -> {end}"),
         String::new(),
     ];
@@ -733,13 +737,22 @@ async fn weekly_summary_text(pool: &SqlitePool, date: &str) -> Result<String> {
     .await?;
 
     lines.push(String::new());
-    lines.push(format!("Diem trung binh: {avg}/100"));
+    lines.push(format!("Điểm trung bình: {avg}/100"));
     for row in urge_rows {
-        lines.push(format!("{}: {}", row.get::<String, _>("kind"), row.get::<i64, _>("count")));
+        let kind = row.get::<String, _>("kind");
+        lines.push(format!("{}: {}", urge_kind_label(&kind), row.get::<i64, _>("count")));
     }
     lines.push(String::new());
-    lines.push("Ket luan: Dung can hoan hao. Can quay lai moi ngay.".to_string());
+    lines.push("Kết luận: Đừng cần hoàn hảo. Cần quay lại mỗi ngày.".to_string());
     Ok(lines.join("\n"))
+}
+
+fn urge_kind_label(kind: &str) -> &str {
+    match kind {
+        "pass" => "Đã vượt qua",
+        "stalk" => "Đã stalk",
+        _ => kind,
+    }
 }
 
 async fn score_for_date(pool: &SqlitePool, date: &str) -> Result<(i64, i64)> {
