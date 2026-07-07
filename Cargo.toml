@@ -1,0 +1,17 @@
+[package]
+name = "monk-mode-bot"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0"
+chrono = { version = "0.4", features = ["clock", "serde"] }
+chrono-tz = "0.10"
+dptree = "0.5"
+dotenvy = "0.15"
+serde = { version = "1.0", features = ["derive"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "chrono"] }
+teloxide = { version = "0.17", default-features = false, features = ["ctrlc_handler", "macros", "rustls", "throttle"] }
+tokio = { version = "1.36", features = ["macros", "rt-multi-thread", "signal", "time"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
