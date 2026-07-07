@@ -338,6 +338,16 @@ async fn handle_message(bot: Bot, msg: Message, state: Arc<AppState>) -> Handler
                     bot.send_message(chat_id, format!("✅ Đã lưu journal cho ngày {date}.")).await?;
                     return Ok(());
                 }
+                "journal_then_tomorrow_plan" => {
+                    save_journal(&state.pool, &date, text).await?;
+                    mark_task_done(&state.pool, &date, "journal").await?;
+                    let tomorrow = next_date(&date)?;
+                    ensure_tasks_for_section(&state.pool, &tomorrow, section_by_id("plan").unwrap()).await?;
+                    set_session(&state.pool, state.owner_id, "tomorrow_plan", &tomorrow).await?;
+                    bot.send_message(chat_id, format!("✅ Đã lưu journal cho ngày {date}.")).await?;
+                    bot.send_message(chat_id, tomorrow_plan_prompt(&date, &tomorrow)).await?;
+                    return Ok(());
+                }
                 "plan" => {
                     save_priorities(&state.pool, &date, text).await?;
                     mark_task_done(&state.pool, &date, "top3").await?;
@@ -543,11 +553,7 @@ async fn schedule_tick(bot: &Bot, state: &AppState) -> Result<()> {
                 .reply_markup(today_keyboard(&date))
                 .await?;
             send_excuse_prompts(bot, state, &date).await?;
-            let tomorrow = next_date(&date)?;
-            ensure_tasks_for_section(&state.pool, &tomorrow, section_by_id("plan").unwrap()).await?;
-            set_session(&state.pool, state.owner_id, "tomorrow_plan", &tomorrow).await?;
-            bot.send_message(ChatId(state.owner_id), tomorrow_plan_prompt(&date, &tomorrow))
-                .await?;
+            send_end_of_day_prompts(bot, state, &date).await?;
         }
     }
 
@@ -873,6 +879,21 @@ async fn send_excuse_prompts(bot: &Bot, state: &AppState, date: &str) -> Result<
     Ok(())
 }
 
+async fn send_end_of_day_prompts(bot: &Bot, state: &AppState, date: &str) -> Result<()> {
+    if load_journal(&state.pool, date).await?.is_none() {
+        set_session(&state.pool, state.owner_id, "journal_then_tomorrow_plan", date).await?;
+        bot.send_message(ChatId(state.owner_id), journal_prompt(date)).await?;
+        return Ok(());
+    }
+
+    let tomorrow = next_date(date)?;
+    ensure_tasks_for_section(&state.pool, &tomorrow, section_by_id("plan").unwrap()).await?;
+    set_session(&state.pool, state.owner_id, "tomorrow_plan", &tomorrow).await?;
+    bot.send_message(ChatId(state.owner_id), tomorrow_plan_prompt(date, &tomorrow))
+        .await?;
+    Ok(())
+}
+
 fn urge_kind_label(kind: &str) -> &str {
     match kind {
         "pass" => "Đã vượt qua",
@@ -915,6 +936,14 @@ async fn save_journal(pool: &SqlitePool, date: &str, content: &str) -> Result<()
     .execute(pool)
     .await?;
     Ok(())
+}
+
+async fn load_journal(pool: &SqlitePool, date: &str) -> Result<Option<String>> {
+    let journal = sqlx::query_scalar::<_, String>("SELECT content FROM monk_journals WHERE date = ?")
+        .bind(date)
+        .fetch_optional(pool)
+        .await?;
+    Ok(journal)
 }
 
 async fn save_priorities(pool: &SqlitePool, date: &str, content: &str) -> Result<()> {
