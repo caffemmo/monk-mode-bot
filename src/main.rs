@@ -146,6 +146,25 @@ const SECTIONS: &[SectionDef] = &[
     SectionDef { id: "sleep", time: "00:40", title: "🚿 00:40 CHUẨN BỊ NGỦ", intro: "Tắm, tắt màn hình, ngủ lúc 01:00.", tasks: SLEEP_TASKS },
 ];
 
+const IMPORTANT_TASK_IDS: &[&str] = &[
+    "top3",
+    "mmo",
+    "train",
+    "no_stalk",
+    "study60",
+    "read20",
+    "journal",
+    "sleep",
+];
+
+const EXCUSE_REASONS: &[(&str, &str)] = &[
+    ("tired", "Mệt thật"),
+    ("lazy", "Lười"),
+    ("busy", "Bận"),
+    ("sad", "Buồn"),
+    ("no_reason", "Không lý do"),
+];
+
 #[tokio::main]
 async fn main() -> Result<()> {
     dotenvy::dotenv().ok();
@@ -281,6 +300,17 @@ async fn migrate(pool: &SqlitePool) -> Result<()> {
     )
     .execute(pool)
     .await?;
+    sqlx::query(
+        r#"CREATE TABLE IF NOT EXISTS monk_excuses (
+            date TEXT NOT NULL,
+            task_id TEXT NOT NULL,
+            reason TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            PRIMARY KEY (date, task_id)
+        )"#,
+    )
+    .execute(pool)
+    .await?;
     Ok(())
 }
 
@@ -313,6 +343,14 @@ async fn handle_message(bot: Bot, msg: Message, state: Arc<AppState>) -> Handler
                     mark_task_done(&state.pool, &date, "top3").await?;
                     clear_session(&state.pool, state.owner_id).await?;
                     bot.send_message(chat_id, format!("✅ Đã lưu 3 việc quan trọng cho ngày {date}.")).await?;
+                    return Ok(());
+                }
+                "tomorrow_plan" => {
+                    ensure_tasks_for_section(&state.pool, &date, section_by_id("plan").unwrap()).await?;
+                    save_priorities(&state.pool, &date, text).await?;
+                    mark_task_done(&state.pool, &date, "top3").await?;
+                    clear_session(&state.pool, state.owner_id).await?;
+                    bot.send_message(chat_id, format!("✅ Đã lưu kế hoạch cho ngày mai ({date}). Sáng mai bot sẽ nhắc lại.")).await?;
                     return Ok(());
                 }
                 _ => {}
@@ -437,6 +475,22 @@ async fn handle_callback(bot: Bot, q: CallbackQuery, state: Arc<AppState>) -> Ha
         }
         bot.answer_callback_query(q.id).text("Đã ghi nhận.").await?;
         bot.send_message(chat_id, "Ghi nhận xong. Quay lại đường ray ngay bây giờ.").await?;
+    } else if let Some(rest) = data.strip_prefix("excuse|") {
+        let parts = rest.split('|').collect::<Vec<_>>();
+        if parts.len() != 3 {
+            bot.answer_callback_query(q.id).text("Callback lỗi.").await?;
+            return Ok(());
+        }
+        let date = parts[0];
+        let task_id = parts[1];
+        let reason = parts[2];
+        save_excuse(&state.pool, date, task_id, reason).await?;
+        bot.answer_callback_query(q.id)
+            .text(format!("Đã ghi lý do: {}", excuse_reason_label(reason)))
+            .await?;
+        bot.edit_message_reply_markup(chat_id, message.id())
+            .reply_markup(InlineKeyboardMarkup::new(Vec::<Vec<InlineKeyboardButton>>::new()))
+            .await?;
     }
 
     Ok(())
@@ -474,6 +528,9 @@ async fn schedule_tick(bot: &Bot, state: &AppState) -> Result<()> {
                     set_session(&state.pool, state.owner_id, "plan", &date).await?;
                     bot.send_message(ChatId(state.owner_id), plan_prompt(&date)).await?;
                 }
+                if section.id == "morning" {
+                    send_morning_plan_reminder(bot, state, &date).await?;
+                }
             }
         }
     }
@@ -484,6 +541,12 @@ async fn schedule_tick(bot: &Bot, state: &AppState) -> Result<()> {
             ensure_all_tasks_for_date(&state.pool, &date).await?;
             bot.send_message(ChatId(state.owner_id), daily_summary_text(&state.pool, &date, state).await?)
                 .reply_markup(today_keyboard(&date))
+                .await?;
+            send_excuse_prompts(bot, state, &date).await?;
+            let tomorrow = next_date(&date)?;
+            ensure_tasks_for_section(&state.pool, &tomorrow, section_by_id("plan").unwrap()).await?;
+            set_session(&state.pool, state.owner_id, "tomorrow_plan", &tomorrow).await?;
+            bot.send_message(ChatId(state.owner_id), tomorrow_plan_prompt(&date, &tomorrow))
                 .await?;
         }
     }
@@ -524,6 +587,12 @@ fn plan_prompt(date: &str) -> String {
     format!("📒 Kế hoạch ngày {date}\n\nGửi 3 việc quan trọng nhất hôm nay, mỗi việc một dòng.")
 }
 
+fn tomorrow_plan_prompt(today: &str, tomorrow: &str) -> String {
+    format!(
+        "🌙 Cuối ngày {today}\n\nViết 3 kế hoạch muốn làm cho ngày mai ({tomorrow}).\nMỗi việc một dòng.\n\nSáng mai bot sẽ gửi lại để bạn không bắt đầu ngày mới trong mơ hồ."
+    )
+}
+
 fn urge_text() -> &'static str {
     "🚨 ĐANG NHỚ CÔ ẤY\n\nDừng lại 10 phút.\n\nKhông mở story.\nKhông đọc tin cũ.\nKhông nhắn khi đang nhớ.\n\nLàm 1 trong 3:\n🏋️ Gym\n🚶 Đi bộ\n📓 Viết 5 dòng\n\nChọn kết quả bên dưới."
 }
@@ -551,6 +620,20 @@ fn urge_keyboard(date: &str) -> InlineKeyboardMarkup {
         vec![InlineKeyboardButton::callback("✅ Tôi đã vượt qua", format!("urge|pass|{date}"))],
         vec![InlineKeyboardButton::callback("❌ Tôi đã stalk", format!("urge|stalk|{date}"))],
     ])
+}
+
+fn excuse_keyboard(date: &str, task_id: &str) -> InlineKeyboardMarkup {
+    InlineKeyboardMarkup::new(
+        EXCUSE_REASONS
+            .iter()
+            .map(|(reason, label)| {
+                vec![InlineKeyboardButton::callback(
+                    (*label).to_string(),
+                    format!("excuse|{date}|{task_id}|{reason}"),
+                )]
+            })
+            .collect::<Vec<_>>(),
+    )
 }
 
 async fn section_keyboard(pool: &SqlitePool, date: &str, section: &SectionDef) -> Result<InlineKeyboardMarkup> {
@@ -735,6 +818,13 @@ async fn weekly_summary_text(pool: &SqlitePool, date: &str) -> Result<String> {
     .bind(end.format("%Y-%m-%d").to_string())
     .fetch_all(pool)
     .await?;
+    let excuse_rows = sqlx::query(
+        "SELECT reason, COUNT(1) AS count FROM monk_excuses WHERE date >= ? AND date <= ? GROUP BY reason ORDER BY count DESC",
+    )
+    .bind(start.format("%Y-%m-%d").to_string())
+    .bind(end.format("%Y-%m-%d").to_string())
+    .fetch_all(pool)
+    .await?;
 
     lines.push(String::new());
     lines.push(format!("Điểm trung bình: {avg}/100"));
@@ -742,9 +832,45 @@ async fn weekly_summary_text(pool: &SqlitePool, date: &str) -> Result<String> {
         let kind = row.get::<String, _>("kind");
         lines.push(format!("{}: {}", urge_kind_label(&kind), row.get::<i64, _>("count")));
     }
+    if !excuse_rows.is_empty() {
+        lines.push(String::new());
+        lines.push("Anti-Excuse:".to_string());
+        for row in excuse_rows {
+            let reason = row.get::<String, _>("reason");
+            lines.push(format!(
+                "{}: {}",
+                excuse_reason_label(&reason),
+                row.get::<i64, _>("count")
+            ));
+        }
+    }
     lines.push(String::new());
     lines.push("Kết luận: Đừng cần hoàn hảo. Cần quay lại mỗi ngày.".to_string());
     Ok(lines.join("\n"))
+}
+
+async fn send_morning_plan_reminder(bot: &Bot, state: &AppState, date: &str) -> Result<()> {
+    if let Some(plan) = load_priorities(&state.pool, date).await? {
+        bot.send_message(
+            ChatId(state.owner_id),
+            format!("📒 Kế hoạch bạn đã hứa cho hôm nay ({date}):\n\n{plan}\n\nĐừng thương lượng với cảm xúc. Làm từng việc một."),
+        )
+        .await?;
+    }
+    Ok(())
+}
+
+async fn send_excuse_prompts(bot: &Bot, state: &AppState, date: &str) -> Result<()> {
+    let missed = missed_important_tasks(&state.pool, date).await?;
+    for (task_id, title) in missed {
+        bot.send_message(
+            ChatId(state.owner_id),
+            format!("🧱 Anti-Excuse\n\nBạn chưa hoàn thành: {title}\n\nLý do thật là gì?"),
+        )
+        .reply_markup(excuse_keyboard(date, &task_id))
+        .await?;
+    }
+    Ok(())
 }
 
 fn urge_kind_label(kind: &str) -> &str {
@@ -753,6 +879,13 @@ fn urge_kind_label(kind: &str) -> &str {
         "stalk" => "Đã stalk",
         _ => kind,
     }
+}
+
+fn excuse_reason_label(reason: &str) -> &str {
+    EXCUSE_REASONS
+        .iter()
+        .find_map(|(key, label)| (*key == reason).then_some(*label))
+        .unwrap_or(reason)
 }
 
 async fn score_for_date(pool: &SqlitePool, date: &str) -> Result<(i64, i64)> {
@@ -795,6 +928,60 @@ async fn save_priorities(pool: &SqlitePool, date: &str, content: &str) -> Result
     .bind(content)
     .bind(&now)
     .bind(&now)
+    .execute(pool)
+    .await?;
+    Ok(())
+}
+
+async fn load_priorities(pool: &SqlitePool, date: &str) -> Result<Option<String>> {
+    let priorities = sqlx::query_scalar::<_, String>("SELECT content FROM monk_priorities WHERE date = ?")
+        .bind(date)
+        .fetch_optional(pool)
+        .await?;
+    Ok(priorities)
+}
+
+async fn missed_important_tasks(pool: &SqlitePool, date: &str) -> Result<Vec<(String, String)>> {
+    let mut missed = Vec::new();
+    for task_id in IMPORTANT_TASK_IDS {
+        let row = sqlx::query(
+            "SELECT title, completed FROM monk_tasks WHERE date = ? AND task_id = ?",
+        )
+        .bind(date)
+        .bind(task_id)
+        .fetch_optional(pool)
+        .await?;
+        let Some(row) = row else {
+            continue;
+        };
+        if row.get::<i64, _>("completed") != 0 {
+            continue;
+        }
+        let already_answered = sqlx::query_scalar::<_, i64>(
+            "SELECT 1 FROM monk_excuses WHERE date = ? AND task_id = ?",
+        )
+        .bind(date)
+        .bind(task_id)
+        .fetch_optional(pool)
+        .await?
+        .is_some();
+        if !already_answered {
+            missed.push(((*task_id).to_string(), row.get::<String, _>("title")));
+        }
+    }
+    Ok(missed)
+}
+
+async fn save_excuse(pool: &SqlitePool, date: &str, task_id: &str, reason: &str) -> Result<()> {
+    sqlx::query(
+        "INSERT INTO monk_excuses (date, task_id, reason, created_at)
+         VALUES (?, ?, ?, ?)
+         ON CONFLICT(date, task_id) DO UPDATE SET reason = excluded.reason, created_at = excluded.created_at",
+    )
+    .bind(date)
+    .bind(task_id)
+    .bind(reason)
+    .bind(Utc::now().to_rfc3339())
     .execute(pool)
     .await?;
     Ok(())
@@ -882,6 +1069,11 @@ fn monk_date_from_local(now: chrono::DateTime<Tz>) -> String {
         now.date_naive()
     };
     date.format("%Y-%m-%d").to_string()
+}
+
+fn next_date(date: &str) -> Result<String> {
+    let date = NaiveDate::parse_from_str(date, "%Y-%m-%d")? + Duration::days(1);
+    Ok(date.format("%Y-%m-%d").to_string())
 }
 
 fn command_name(text: &str) -> &str {

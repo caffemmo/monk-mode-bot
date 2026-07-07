@@ -34,6 +34,13 @@ cargo run --release
 
 Bot chỉ phản hồi `OWNER_TELEGRAM_ID`.
 
+## Logic thêm
+
+- Cuối ngày bot gửi tổng kết, hỏi lý do cho các task quan trọng chưa hoàn thành.
+- Cuối ngày bot hỏi 3 kế hoạch cho ngày mai.
+- Sáng hôm sau bot gửi lại kế hoạch bạn đã viết.
+- Cuối tuần bot thống kê lý do bỏ task trong mục Anti-Excuse.
+
 ## Systemd gợi ý
 
 ```ini
